@@ -67,10 +67,13 @@ class StateProviderExapmle extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // ref.read(cunterProvider.notifier).state =
-          //     ref.read(cunterProvider.notifier).state + 1;
-          ref.read(counterProvider.notifier).update((state) => state + 1);
+          // ref.read(counterProvider.notifier).state =
+          //     ref.read(counterProvider.notifier).state + 1;
+          //ref.read(counterProvider.notifier).update((state) => state + 1);
+          //ref.read(counterProvider.notifier).state += 10;
+          ref.read(counterProvider.notifier).state++;
         },
+        child: const Icon(Icons.add),
       ),
     );
   }
