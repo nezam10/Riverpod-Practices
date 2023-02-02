@@ -1,82 +1,88 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:riverpod_practice/view/state_provider_example.dart';
 
-final messageProvider = Provider<String>((ref) {
-  return 'bismillahir rahmanir rahim';
-});
-final nextProvider = Provider<String>(((ref) => "Next"));
-final dateFormetterProvider = Provider<DateFormat>((ref) {
-  return DateFormat.MMMEd();
-});
+import '../controllers/common_controller.dart';
 
-class HomeScreen extends ConsumerWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: _BodyWidget(),
+    );
+  }
+}
+
+class _BodyWidget extends ConsumerWidget {
+  const _BodyWidget({
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final message = ref.watch(messageProvider);
-    final nextText = ref.watch(nextProvider);
-    final currentDate = ref.watch(dateFormetterProvider);
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(message),
-              Text(currentDate.format(DateTime.now())),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const StateProviderExapmle(),
-                  ));
-                },
-                child: Text(nextText),
-              )
-            ],
-          ),
-        ),
-      ),
+    final currencyList = ref.watch(currencyListProvider);
+    return Column(
+      children: [],
     );
   }
 }
 
-// consumer
-class ConsumerTest extends StatelessWidget {
-  const ConsumerTest({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Consumer(
-            builder: (context, ref, child) {
-              final message = ref.watch(messageProvider);
-              return Text(
-                message,
-                style: const TextStyle(color: Colors.blue),
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-}
 
-// ConsumerStatefulWidget
-class MyWidget extends ConsumerStatefulWidget {
-  const MyWidget({super.key});
 
-  @override
-  ConsumerState<MyWidget> createState() => _MyWidgetState();
-}
 
-class _MyWidgetState extends ConsumerState<MyWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
+
+
+//example code//
+
+// class _BodyWidget extends ConsumerWidget {
+//   final ProfileController controller;
+
+//   const _BodyWidget({super.key, required this.controller});
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final appCon = Get.find<AppController>();
+//     final userProfile =
+//         ref.watch(getProfileInfoProvider(appCon.user.userId.toString()));
+//     return SizedBox.expand(
+//       child: CreateBoxShap(
+//           child: userProfile.when(
+//         data: (data) {
+//           controller.setUserData(data!);
+//           return GetBuilder<ProfileController>(
+//               // init: MyController(),
+//               // initState: (_) {},
+//               builder: (kycController) {
+//             return SizedBox.expand(
+//               child: CreateBoxShap(
+//                 child: PageView(
+//                   controller: kycController.pageController,
+//                   scrollDirection: Axis.horizontal,
+//                   physics: const NeverScrollableScrollPhysics(),
+//                   pageSnapping: true,
+//                   onPageChanged: (index) {
+//                     kycController.pageChanged(index);
+//                   },
+//                   children: [
+//                     // first pageView
+//                     ProfileInfoPageView(profileCon: kycController),
+//                     // secound pageView
+//                     ProfilePermanentAddressPageView(profileCon: kycController),
+//                     ProfileShippingAddressPageView(profileCon: kycController),
+//                     ProfileProofPageView(
+//                         profileCon: kycController, profileData: data),
+
+//                     // third pageView
+//                   ],
+//                 ),
+//               ),
+//             );
+//           });
+//         },
+//         error: (error, stackTrace) => Text(error.toString()),
+//         loading: () => const CustomCircularIndicatorWiedget(),
+//       )),
+//     );
+//   }
+// }

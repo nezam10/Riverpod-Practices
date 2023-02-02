@@ -17,10 +17,18 @@ enum ProductSortType {
   price,
 }
 
-class StateProviderExapmle extends ConsumerWidget {
+class StateProviderExapmle extends ConsumerStatefulWidget {
   const StateProviderExapmle({super.key});
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<StateProviderExapmle> createState() =>
+      _StateProviderExapmleState();
+}
+
+class _StateProviderExapmleState extends ConsumerState<StateProviderExapmle> {
+  var favoriteItems = [];
+  @override
+  Widget build(BuildContext context) {
     final products = ref.watch(productProvider);
     final cunterValue = ref.watch(counterProvider);
     return Scaffold(
@@ -57,6 +65,26 @@ class StateProviderExapmle extends ConsumerWidget {
                   child: ListTile(
                     title: Text(product.name),
                     subtitle: Text(product.price.toString()),
+                    trailing: IconButton(
+                      onPressed: () {
+                        //favoriteItems.add(index);
+                        setState(() {
+                          print(favoriteItems.length);
+                          if (favoriteItems.contains(index)) {
+                            favoriteItems.remove(index);
+                          } else {
+                            favoriteItems.add(index);
+                          }
+                        });
+                        print(favoriteItems);
+                      },
+                      icon: Icon(
+                        Icons.favorite,
+                        color: favoriteItems.contains(index)
+                            ? Colors.red
+                            : Colors.black,
+                      ),
+                    ),
                   ),
                 ),
               );
